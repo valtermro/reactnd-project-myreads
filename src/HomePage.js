@@ -1,77 +1,43 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import BookShelf from './BookShelf';
-import * as API from './BooksAPI';
 import './HomePage.css';
 
-export default class HomePage extends React.Component {
-  state = {
-    books: []
-  }
+export default function HomePage({ booksInShelf, onChangeShelf }) {
+  return (
+    <div className='home-page'>
+      <header className='home-page__header'>
+        <h1 className='home-page__title'>MyReads</h1>
+      </header>
 
-  componentDidMount = async () => {
-    // TODO: error handling
-    const books = await API.getAll();
-    this.setState({ books });
-  }
+      <main className='home-page__content'>
+        <BookShelf
+          title='Currently Reading'
+          books={booksInShelf.filter(b => b.shelf === 'currentlyReading')}
+          onChangeShelf={onChangeShelf} />
 
-  removeBook = (bookId) => {
-    this.setState(currentState => ({
-      books: currentState.books.filter(b => b.id !== bookId)
-    }));
-  }
+        <BookShelf
+          title='Want to Read'
+          books={booksInShelf.filter(b => b.shelf === 'wantToRead')}
+          onChangeShelf={onChangeShelf} />
 
-  moveBook = (newShelf, bookId) => {
-    const movedBook = this.state.books.find(b => b.id === bookId);
-    movedBook.shelf = newShelf;
-
-    this.setState(currentState => ({
-      books: currentState.books
-        .filter(b => b.id !== bookId)
-        .concat(movedBook)
-    }));
-  }
-
-  onMoveBook = (newShelf, bookId) => {
-    if (newShelf === 'none') {
-      this.removeBook(bookId);
-    } else {
-      this.moveBook(newShelf, bookId);
-    }
-  }
-
-  render() {
-    return (
-      <main className='home-page'>
-        <header className='home-page__header'>
-          <h1 className='home-page__title'>MyReads</h1>
-        </header>
-
-        <div className='home-page__content'>
-          <BookShelf
-            id='currentlyReading'
-            title='Currently Reading'
-            books={this.state.books.filter(b => b.shelf === 'currentlyReading')}
-            onMoveBook={this.onMoveBook} />
-
-          <BookShelf
-            id='wantToRead'
-            title='Want to Read'
-            books={this.state.books.filter(b => b.shelf === 'wantToRead')}
-            onMoveBook={this.onMoveBook} />
-
-          <BookShelf
-            id='read'
-            title='Read'
-            books={this.state.books.filter(b => b.shelf === 'read')}
-            onMoveBook={this.onMoveBook} />
-        </div>
-
-        <div className='home-page__search-button-wrapper'>
-          <button className='home-page__search-button'>
-            Add a book
-          </button>
-        </div>
+        <BookShelf
+          title='Read'
+          books={booksInShelf.filter(b => b.shelf === 'read')}
+          onChangeShelf={onChangeShelf} />
       </main>
-    );
-  }
+
+      <div className='home-page__search-button-wrapper'>
+        <Link to='/search' className='home-page__search-button'>
+          Add a book
+        </Link>
+      </div>
+    </div>
+  );
 }
+
+HomePage.propTypes = {
+  onChangeShelf: PropTypes.func.isRequired,
+  booksInShelf: PropTypes.array.isRequired
+};

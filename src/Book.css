@@ -23,4 +23,12 @@
   height: 193px;
   background-size: cover;
   background-position: center;
+
+  /* the placeholder text */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.8em;
+  text-transform: uppercase;
+  color: #a4a4a4;
 }

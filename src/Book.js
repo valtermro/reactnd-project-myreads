@@ -6,8 +6,10 @@ export default function Book({ title, authors, images }) {
   return (
     <div className='book'>
       <div
-        className='book__cover'
-        style={{ backgroundImage: `url(${images.smallThumbnail})` }} />
+          className='book__cover'
+          style={{ backgroundImage: `url(${images.smallThumbnail})` }}>
+        {!images.smallThumbnail && <p>No thumbnail</p>}
+      </div>
 
       {/* TODO: Display more info about the book */}
       {/* TODO: H3? */}

@@ -11,7 +11,7 @@ const headers = {
   'Authorization': token
 };
 
-export const get = (bookId) => {
+export const get = bookId => {
   return fetch(`${api}/books/${bookId}`, { headers })
     .then(res => res.json())
     .then(data => data.book);
@@ -34,7 +34,7 @@ export const update = (book, shelf) => {
     .then(res => res.json());
 };
 
-export const search = (query) => {
+export const search = query => {
   const options = {
     method: 'POST',
     headers: { ...headers, 'Content-Type': 'application/json' },
