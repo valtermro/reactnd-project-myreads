@@ -1,21 +1,48 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import BookGrid from './BookGrid';
+import BookDisplay from './BookDisplay';
 import './BookShelf.css';
 
-export default function BookShelf({ title, books, onChangeShelf }) {
-  return (
-    <section className='bookshelf'>
-      <h2 className='bookshelf__title'>{ title }</h2>
-      <div className='bookshelf__books'>
-        <BookGrid books={books} onChangeShelf={onChangeShelf} />
-      </div>
-    </section>
-  );
-}
+export default class BookShelf extends React.Component {
+  static propTypes = {
+    title: PropTypes.string.isRequired,
+    books: PropTypes.array.isRequired,
+    onMoveBook: PropTypes.func.isRequired
+  }
 
-BookShelf.propTypes = {
-  title: PropTypes.string.isRequired,
-  books: PropTypes.array.isRequired,
-  onChangeShelf: PropTypes.func.isRequired
-};
+  state = {
+    collapsed: false
+  }
+
+  toggleCollapse = () => {
+    this.setState(currentState => ({ collapsed: !currentState.collapsed }));
+  }
+
+  render() {
+    const { title, books, onMoveBook } = this.props;
+    const { collapsed } = this.state;
+
+    return (
+      <section className='BookShelf' data-collapsed={collapsed}>
+        <header className='BookShelf__Header'>
+          <h2 className='BookShelf__Title'>
+            {title}
+          </h2>
+          <button type='button'
+              className='button BookShelf__CollapseButton'
+              onClick={this.toggleCollapse}>
+            {collapsed ? 'expand' : 'collapse'}
+          </button>
+        </header>
+
+        <div className='BookShelf__Display'>
+          {/* TODO: "loading" state */}
+          <BookDisplay
+            shelf={books.length > 0 ? books[0].shelf : 'none'}
+            books={books}
+            onMoveBook={onMoveBook} />
+        </div>
+      </section>
+    );
+  }
+}

@@ -1,34 +1,31 @@
-.book {
-  width: 140px;
+.Book {
+  width: 160px;
+  text-align: center;
 }
 
-.book__title,
-.book__authors {
-  font-size: 0.8em;
-}
-
-.book__title {
-  font-weight: 400;
-  margin: 10px 0 0;
-}
-
-.book__authors {
-  color: #999;
-}
-
-.book__cover {
-  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-  background: #eee;
-  width: 128px;
-  height: 193px;
+.Book__Cover {
+  margin: 0 auto;
+  width: 130px;
+  height: 200px;
+  background-color: #f4f4f4;
   background-size: cover;
   background-position: center;
 
   /* the placeholder text */
+  color: #a4a4a4;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 0.8em;
   text-transform: uppercase;
-  color: #a4a4a4;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.Book__Title {
+  font-size: 13px;
+  margin-bottom: 0.3em;
+}
+
+.Book__Authors {
+  font-size: 12px;
 }

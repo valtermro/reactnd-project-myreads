@@ -1,0 +1,31 @@
+.Select {
+  background: #fff;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+  outline: 0;
+}
+
+.Select__Label,
+.Select__Option {
+  cursor: default;
+  display: block;
+  font-size: 13px;
+  width: 100%;
+  padding: 8px 10px;
+}
+
+.Select__Label {
+  color: #999;
+}
+
+.Select__Option:not([data-current='true']) {
+  cursor: pointer;
+}
+
+.Select__Option[data-current='true'] {
+  background: #f4f4f4;
+}
+
+.Select__Option[data-selected='true'],
+.Select__Option:hover {
+  background: #e4e4e4;
+}

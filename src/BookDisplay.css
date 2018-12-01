@@ -1,0 +1,126 @@
+.BookDisplay {
+  width: 180px;
+  margin: 0 auto;
+}
+
+@media screen and (min-width: 460px) {
+  .BookDisplay {
+    width: 360px;
+  }
+}
+
+@media screen and (min-width: 620px) {
+  .BookDisplay {
+    width: 540px;
+  }
+}
+
+@media screen and (min-width: 820px) {
+  .BookDisplay {
+    width: 720px;
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  .BookDisplay {
+    width: 900px;
+  }
+}
+
+@media screen and (min-width: 1260px) {
+  .BookDisplay {
+    width: 1080px;
+  }
+}
+
+@media screen and (min-width: 1360px) {
+  .BookDisplay {
+    width: 1260px;
+  }
+}
+
+.BookDisplay__Grid {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+}
+
+.BookDisplay__BulkActions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  margin: 20px 5px 20px 0;
+}
+
+.BookDisplay__BulkButtonWrapper {
+  margin: 0 15px;
+  position: relative;
+  padding: 8px 0;
+  width: 80%;
+}
+
+.BookDisplay__BulkButton {
+  width: 100%;
+  text-align: right;
+}
+
+@media screen and (min-width: 480px) {
+  .BookDisplay__BulkButtonWrapper {
+    width: 50%;
+  }
+}
+
+@media screen and (min-width: 640px) {
+  .BookDisplay__BulkButtonWrapper {
+    width: auto;
+    padding: 0;
+  }
+
+  .BookDisplay__BulkButtonWrapper:not(:last-child):after {
+    display: block;
+    content: '';
+    width: 1px;
+    height: 100%;
+    background: #007070;
+    position: absolute;
+    top: 0;
+    /* Button's margin-right + 1px. Negated to push it outside of the button */
+    right: -16px;
+  }
+}
+
+.BookDisplay__EmptyState {
+  color: #666;
+  text-align: center;
+  padding: 30px 0 10px;
+}
+
+.BookDisplay__BookWrapper {
+  width: 160px;
+  margin: 10px;
+  position: relative;
+}
+
+.BookDisplay__BookCheckButton {
+  position: absolute;
+  top: 0;
+  left: 132px;
+  transform: translate(0, -8px);
+}
+
+.BookDisplay__ShelfChanger {
+  position: absolute;
+  top: 162px;
+  left: 112px;
+}
+
+.BookDisplay__ShelfChanger__Toggler {
+  background-image: url(./icons/arrow-drop-down.svg);
+  background-size: 20px;
+  width: 38px;
+  height: 38px;
+  z-index: -1;
+}
+
+.BookDisplay__BulkShelfChanger {
+}

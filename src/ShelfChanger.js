@@ -1,29 +1,74 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Select from './elements/Select';
 import './ShelfChanger.css';
 
-export default function ShelfChanger({ current, onChange }) {
-  return (
-    <div className='shelf-changer'>
-      <select
-          defaultValue={current || 'none'}
-          className='shelf-changer__select'
-          onChange={event => onChange(event.target.value)}>
-        <option value='' disabled>
-          {current ? 'Move to...' : 'Add to...'}
-        </option> :
+export default class ShelfChanger extends React.Component {
+  static propTypes = {
+    label: PropTypes.string.isRequired,
+    current: PropTypes.string,
+    onChange: PropTypes.func.isRequired
+  }
 
-        <option value='currentlyReading'>Currently Reading</option>
-        <option value='wantToRead'>Want to Read</option>
-        <option value='read'>Read</option>
+  state = {
+    selectIsOpen: false,
+    selectPositionY: 'top',
+  }
 
-        <option value='none'>None</option>
-      </select>
-    </div>
-  );
+  onChange = value => {
+    this.props.onChange(value);
+    this.closeSelect();
+  }
+
+  openSelect = () => {
+    const select = this.refs.select.refs.root;
+    const selectHeight = select.offsetHeight;
+    const selectTop = select.getBoundingClientRect().top;
+    const selectMarginBottom = 20;
+
+    // decide if the Select should slide up-to-bottom or bottom-to-up
+    // NOTE: assuming state.selectPositionY === 'top'
+    if (selectTop + selectHeight > window.innerHeight - selectMarginBottom) {
+      this.setState({ selectIsOpen: true, selectPositionY: 'bottom' });
+    } else {
+      this.setState({ selectIsOpen: true, selectPositionY: 'top' });
+    }
+    select.focus();
+  }
+
+  closeSelect = () => {
+    this.setState({ selectIsOpen: false });
+  }
+
+  render() {
+    const { selectIsOpen, selectPositionY } = this.state;
+    const { current, label, className, children } = this.props;
+
+    return (
+      <div className='ShelfChanger' data-is-open={selectIsOpen}>
+        {/* TODO: find a better way to "ref" the rendered DOM element */}
+        <div onClick={this.openSelect}>
+          {children}
+        </div>
+
+        <Select ref='select'
+            // These properties are passed directly to the Select's root DOM
+            // element and used in the styles ShelfChanger to define special
+            // style/behavior on the renderered Select.
+            className={`ShelfChanger__Select ${className || ''}`}
+            data-position-y={selectPositionY}
+
+            label={label}
+            defaultValue={current}
+            onChange={this.onChange}
+            onBlur={this.closeSelect}
+            options={[
+              { value: 'currentlyReading', label: 'Currently Reading' },
+              { value: 'wantToRead', label: 'Want to Read'  },
+              { value: 'read', label: 'Read' },
+              { value: 'none', label: 'None' }
+            ]} />
+      </div>
+    );
+  }
 }
-
-ShelfChanger.propTypes = {
-  current: PropTypes.string,
-  onChange: PropTypes.func.isRequired
-};

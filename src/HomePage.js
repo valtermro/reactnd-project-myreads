@@ -4,32 +4,32 @@ import { Link } from 'react-router-dom';
 import BookShelf from './BookShelf';
 import './HomePage.css';
 
-export default function HomePage({ booksInShelf, onChangeShelf }) {
+export default function HomePage({ booksInShelf, onMoveBook }) {
   return (
-    <div className='home-page'>
-      <header className='home-page__header'>
-        <h1 className='home-page__title'>MyReads</h1>
+    <div className='HomePage'>
+      <header className='HomePage__Header'>
+        <h1 className='HomePage__Title'>MyReads</h1>
       </header>
 
-      <main className='home-page__content'>
+      <main className='HomePage__Content'>
         <BookShelf
           title='Currently Reading'
           books={booksInShelf.filter(b => b.shelf === 'currentlyReading')}
-          onChangeShelf={onChangeShelf} />
+          onMoveBook={onMoveBook} />
 
         <BookShelf
           title='Want to Read'
           books={booksInShelf.filter(b => b.shelf === 'wantToRead')}
-          onChangeShelf={onChangeShelf} />
+          onMoveBook={onMoveBook} />
 
         <BookShelf
           title='Read'
           books={booksInShelf.filter(b => b.shelf === 'read')}
-          onChangeShelf={onChangeShelf} />
+          onMoveBook={onMoveBook} />
       </main>
 
-      <div className='home-page__search-button-wrapper'>
-        <Link to='/search' className='home-page__search-button'>
+      <div className='HomePage__SearchButtonWrapper'>
+        <Link to='/search' className='action-button HomePage__SearchButton'>
           Add a book
         </Link>
       </div>
@@ -38,6 +38,6 @@ export default function HomePage({ booksInShelf, onChangeShelf }) {
 }
 
 HomePage.propTypes = {
-  onChangeShelf: PropTypes.func.isRequired,
+  onMoveBook: PropTypes.func.isRequired,
   booksInShelf: PropTypes.array.isRequired
 };

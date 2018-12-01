@@ -4,18 +4,16 @@ import './Book.css';
 
 export default function Book({ title, authors, images }) {
   return (
-    <div className='book'>
-      <div
-          className='book__cover'
+    <article className='Book'>
+      <div className='Book__Cover'
           style={{ backgroundImage: `url(${images.smallThumbnail})` }}>
         {!images.smallThumbnail && <p>No thumbnail</p>}
       </div>
 
       {/* TODO: Display more info about the book */}
-      {/* TODO: H3? */}
-      <div className='book__title'>{title}</div>
-      <div className='book__authors'>{authors.join(', ')}</div>
-    </div>
+      <h3 className='Book__Title'>{title}</h3>
+      <div className='Book__Authors'>{authors.join(', ')}</div>
+    </article>
   );
 }
 

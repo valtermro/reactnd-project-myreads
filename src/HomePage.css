@@ -1,40 +1,32 @@
-.home-page__header {
-  padding: 10px 0;
-  background: #2e7c31;
+.HomePage__Header {
+  background: #007070;
+  color: #fff;
+  font-size: 26px;
   text-align: center;
+  padding: 10px 0;
 }
 
-.home-page__title {
-  font-weight: 400;
-  margin: 0;
-  color: white;
+.HomePage__Content {
+  margin: 0 auto;
+  padding: 0 20px;
+  max-width: 1340px;
 }
 
-.home-page__content {
-  padding: 0 0 80px;
-}
-
-.home-page__search-button-wrapper {
+.HomePage__SearchButtonWrapper {
   position: fixed;
   right: 25px;
   bottom: 25px;
 }
 
-.home-page__search-button {
-  display: block;
+.HomePage__SearchButton {
+  background-image: url(./icons/add.svg);
+  background-size: 28px;
   width: 50px;
   height: 50px;
-  border-radius: 50%;
-  background: #2e7d32;
-  background-image: url(./icons/add.svg);
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 28px;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-  font-size: 0;
-  outline: 0;
+  opacity: 0.6;
+  transition: opacity 300ms ease-in-out;
 }
 
-.home-page__search-button:hover {
-  background-color: rgb(0, 102, 0);
+.HomePage__SearchButton:hover {
+  opacity: 1;
 }

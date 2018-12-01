@@ -1,0 +1,26 @@
+.CheckButton {
+  background: #fff;
+  border: 2px solid #005050;
+  border-radius: 50%;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  opacity: 0.8;
+}
+
+.CheckButton[data-checked='true'],
+.CheckButton:hover {
+  opacity: 1;
+}
+
+.CheckButton__Check {
+  border-left: 2px solid #005050;
+  border-bottom: 2px solid #005050;
+  display: block;
+  width: 10px;
+  height: 6px;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -55%) rotate(-40deg);
+}

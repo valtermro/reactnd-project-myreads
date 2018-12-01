@@ -1,13 +1,60 @@
-.bookshelf {
-  padding: 0 10px 20px;
+.BookShelf {
+  background: #fff;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+  margin: 40px auto;
+  padding: 5px 0 20px;
 }
 
-.bookshelf__title {
-  border-bottom: 1px solid #dedede;
+.BookShelf__Header {
+  border-bottom: 1px solid #005050;
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 20px;
+  text-align: center;
+  margin: 0 10px;
+  padding: 10px 15px;
 }
 
-@media (min-width: 600px) {
-  .bookshelf {
-    padding: 0 20px 40px;
+.BookShelf[data-collapsed='true'] {
+  padding-bottom: 0;
+}
+
+.BookShelf[data-collapsed='true'] .BookShelf__Header {
+  border: 0;
+}
+
+.BookShelf[data-collapsed='true'] .BookShelf__Display {
+  height: 0;
+  overflow: hidden;
+}
+
+.BookShelf__Title {
+  width: 100%;
+}
+
+.BookShelf__CollapseButton {
+  width: 50%;
+  margin: 0 auto;
+}
+
+.BookShelf__CollapseButton {
+  font-size: 16px;
+  opacity: 0.8;
+  padding: 8px;
+}
+
+@media screen and (min-width: 640px) {
+  .BookShelf__Header {
+    text-align: left;
+  }
+
+  .BookShelf__Title,
+  .BookShelf__CollapseButton {
+    width: auto;
+  }
+
+  .BookShelf__CollapseButton {
+    margin: 2px 0 0 15px;
+    padding: 0;
   }
 }

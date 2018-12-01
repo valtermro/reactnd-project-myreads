@@ -1,4 +1,4 @@
-.search-page__topbar {
+.SearchPage__Topbar {
   background: #fff;
   position: fixed;
   width: 100%;
@@ -9,7 +9,7 @@
   box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 0 6px rgba(0,0,0,0.23);
 }
 
-.search-page__close-button {
+.SearchPage__CloseButton {
   display: block;
   top: 20px;
   left: 15px;
@@ -24,11 +24,11 @@
   outline: none;
 }
 
-.search-page__input-wrapper {
+.SearchPage__InputWrapper {
   flex: 1;
 }
 
-.search-page__bar__input {
+.SearchPage__Input {
   width: 100%;
   padding: 15px 10px;
   font-size: 1.25em;
@@ -36,18 +36,18 @@
   outline: none;
 }
 
-.search-page__results {
+.SearchPage__Results {
   padding: 80px 10px 20px;
 }
 
-.search-page__empty-state {
+.SearchPage__EmptyState {
   text-align: center;
   padding: 40px 0;
   color: #999;
   font-size: 1.5em;
 }
 
-.search-page__loading-overlay {
+.SearchPage__LoadingOverlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -57,7 +57,7 @@
   z-index: 2;
 }
 
-.search-page__loading-icon {
+.SearchPage__LoadingIcon {
   background-image: url(./icons/loading.svg);
   width: 48px;
   height: 48px;

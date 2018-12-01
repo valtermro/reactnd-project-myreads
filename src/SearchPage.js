@@ -2,13 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import debounce from 'lodash.debounce';
 import { Link } from 'react-router-dom';
-import BookGrid from './BookGrid';
+import BookDisplay from './BookDisplay';
 import * as api from './BooksAPI';
 import './SearchPage.css';
 
 export default class SearchPage extends React.Component {
   static propTypes = {
-    onChangeShelf: PropTypes.func.isRequired,
+    onMoveBook: PropTypes.func.isRequired,
     booksInShelf: PropTypes.array.isRequired
   }
 
@@ -65,42 +65,43 @@ export default class SearchPage extends React.Component {
   }
 
   render() {
-    const { onChangeShelf } = this.props;
+    const { onMoveBook } = this.props;
     const { resultBooks, query, requestedQuery, requestingBooks } = this.state;
 
     return (
-      <div className='search-page'>
-        <header className='search-page__topbar'>
+      <div className='SearchPage'>
+        <header className='SearchPage__Topbar'>
           <h1 className='visually-hidden'>Book search</h1>
 
-          <Link to='/' className='search-page__close-button'>Close</Link>
+          <Link to='/' className='SearchPage__CloseButton'>
+            Close
+          </Link>
 
-          <div className='search-page__input-wrapper'>
-            <input
-              type='text'
-              className='search-page__bar__input'
+          <div className='SearchPage__InputWrapper'>
+            <input type='text'
+              className='SearchPage__Input'
               value={query}
               onChange={this.search}
               placeholder='Search by title or author' />
           </div>
         </header>
 
-        <main className='search-page__results'>
+        <main className='SearchPage__Results'>
           <h2 className='visually-hidden'>Search results</h2>
 
           {requestingBooks && (
-            <div className='search-page__loading-overlay'>
-              <div className='search-page__loading-icon'></div>
+            <div className='SearchPage__LoadingOverlay'>
+              <div className='SearchPage__LoadingIcon'></div>
             </div>
           )}
 
           {resultBooks.length > 0
-            ? <BookGrid books={resultBooks} onChangeShelf={onChangeShelf} />
+            ? <BookDisplay shelf='none' books={resultBooks} onMoveBook={onMoveBook} />
 
             : !requestedQuery
-            ? <div className="search-page__empty-state">Search something.</div>
+            ? <div className="SearchPage__EmptyState">Search something.</div>
 
-            : <div className="search-page__empty-state">Nothing to see here.</div>
+            : <div className="SearchPage__EmptyState">Nothing to see here.</div>
           }
         </main>
       </div>

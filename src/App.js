@@ -16,31 +16,12 @@ export default class BooksApp extends React.Component {
     this.setState({ booksInShelf: books });
   }
 
-  removeBook = book => {
-    book.shelf = null;
-
-    this.setState(currentState => ({
-      booksInShelf: currentState.booksInShelf.filter(b => b.id !== book.id)
-    }));
-  }
-
-  moveBook = (newShelf, book) => {
-    const movedBook = this.state.booksInShelf.find(b => b.id === book.id) || book;
-    movedBook.shelf = newShelf;
-
+  moveBook = (book, newShelf) => {
     this.setState(currentState => ({
       booksInShelf: currentState.booksInShelf
-        .filter(b => b.id !== movedBook.id)
-        .concat(movedBook)
+        .filter(b => b.id !== book.id)
+        .concat({ ...book, shelf: newShelf })
     }));
-  }
-
-  onChangeShelf = (newShelf, book) => {
-    if (newShelf === 'none') {
-      this.removeBook(book);
-    } else {
-      this.moveBook(newShelf, book);
-    }
   }
 
   render() {
@@ -49,11 +30,11 @@ export default class BooksApp extends React.Component {
     return (
       <div className='app'>
         <Route exact path='/' render={() => (
-          <HomePage booksInShelf={booksInShelf} onChangeShelf={this.onChangeShelf} />
+          <HomePage booksInShelf={booksInShelf} onMoveBook={this.moveBook} />
         )} />
 
         <Route path='/search' render={() => (
-          <SearchPage booksInShelf={booksInShelf} onChangeShelf={this.onChangeShelf} />
+          <SearchPage booksInShelf={booksInShelf} onMoveBook={this.moveBook} />
         )} />
       </div>
     );
