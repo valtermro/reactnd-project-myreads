@@ -16,13 +16,11 @@ body {
 .button {
   border: 1px solid transparent;
   transition: border-color 250ms linear;
-  outline: 0;
 }
 
 .button:not([disabled]):active,
 .button:not([disabled]):focus,
 .button:not([disabled]):hover {
-  cursor: pointer;
   border-bottom-color: #005050;
 }
 

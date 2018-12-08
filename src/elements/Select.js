@@ -14,7 +14,9 @@ export default class Select extends React.Component {
     options: []
   }
 
-  componentDidMount = () => {
+  // Using "componentWillReceiveProps" in order to keep the "current" in sync with
+  // the "defaultValue" prop which may change after the component has been mounted.
+  componentWillReceiveProps = () => {
     const { options, defaultValue } = this.props;
 
     this.setState({
@@ -29,17 +31,7 @@ export default class Select extends React.Component {
 
   dispatch = selectedOption => {
     if (selectedOption.current) return;
-
-    this.setState(
-      currentState => ({
-        options: currentState.options.map(option => ({
-          ...option,
-          current: option.value === selectedOption.value,
-          selected: false
-        }))
-      }),
-      () => this.props.onChange(selectedOption.value)
-    );
+    this.props.onChange(selectedOption.value);
   }
 
   selectNextOption = () => {
@@ -95,12 +87,7 @@ export default class Select extends React.Component {
 
   render() {
     const { options } = this.state;
-
-    // need to destructure "options" so it won't be part o "rest" ending up
-    // in the rendered DOM element
-    const {
-      options: _, label, className, onChange, ...rest
-    } = this.props;
+    const { label, className, onChange, options: _, ...rest } = this.props;
 
     return (
       <div ref='root'

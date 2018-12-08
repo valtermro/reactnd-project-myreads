@@ -27,7 +27,6 @@ export default class ShelfChanger extends React.Component {
     const selectMarginBottom = 20;
 
     // decide if the Select should slide up-to-bottom or bottom-to-up
-    // NOTE: assuming state.selectPositionY === 'top'
     if (selectTop + selectHeight > window.innerHeight - selectMarginBottom) {
       this.setState({ selectIsOpen: true, selectPositionY: 'bottom' });
     } else {
@@ -52,22 +51,22 @@ export default class ShelfChanger extends React.Component {
         </div>
 
         <Select ref='select'
-            // These properties are passed directly to the Select's root DOM
-            // element and used in the styles ShelfChanger to define special
-            // style/behavior on the renderered Select.
-            className={`ShelfChanger__Select ${className || ''}`}
-            data-position-y={selectPositionY}
+          // These properties are passed directly to the Select's root DOM
+          // element and used in the styles ShelfChanger to define special
+          // style/behavior on the renderered Select.
+          className={`ShelfChanger__Select ${className || ''}`}
+          data-position-y={selectPositionY}
 
-            label={label}
-            defaultValue={current}
-            onChange={this.onChange}
-            onBlur={this.closeSelect}
-            options={[
-              { value: 'currentlyReading', label: 'Currently Reading' },
-              { value: 'wantToRead', label: 'Want to Read'  },
-              { value: 'read', label: 'Read' },
-              { value: 'none', label: 'None' }
-            ]} />
+          label={label}
+          defaultValue={current}
+          onChange={this.onChange}
+          onBlur={this.closeSelect}
+          options={[
+            { value: 'currentlyReading', label: 'Currently Reading' },
+            { value: 'wantToRead', label: 'Want to Read'  },
+            { value: 'read', label: 'Read' },
+            { value: 'none', label: 'None' }
+          ]} />
       </div>
     );
   }

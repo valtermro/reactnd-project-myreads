@@ -6,6 +6,8 @@ import BookDisplay from './BookDisplay';
 import * as api from './BooksAPI';
 import './SearchPage.css';
 
+// TODO: prevent "render" on each keystroke in the search input
+
 export default class SearchPage extends React.Component {
   static propTypes = {
     onMoveBook: PropTypes.func.isRequired,
@@ -23,9 +25,24 @@ export default class SearchPage extends React.Component {
     resultBooks: []
   }
 
+  resolveBooks = books => {
+    return books.map(book => {
+      const inShelf = this.props.booksInShelf.find(b => b.id === book.id);
+      return inShelf || book;
+    });
+  }
+
   search = event => {
     this.doSearch(event.target.value);
     this.setState({ query: event.target.value });
+  }
+
+  onMoveBook = async (book, newShelf) => {
+    await this.props.onMoveBook(book, newShelf);
+
+    this.setState(currentState => ({
+      resultBooks: this.resolveBooks(currentState.resultBooks)
+    }));
   }
 
   doSearch = debounce(async query => {
@@ -52,10 +69,7 @@ export default class SearchPage extends React.Component {
       this.setState({
         requestingBooks: false,
         requestedQuery: query,
-        resultBooks: result.map(book => {
-          const inShelf = this.props.booksInShelf.find(b => b.id === book.id);
-          return inShelf || book;
-        })
+        resultBooks: this.resolveBooks(result)
       });
     }
   }, 500)
@@ -65,7 +79,6 @@ export default class SearchPage extends React.Component {
   }
 
   render() {
-    const { onMoveBook } = this.props;
     const { resultBooks, query, requestedQuery, requestingBooks } = this.state;
 
     return (
@@ -96,7 +109,7 @@ export default class SearchPage extends React.Component {
           )}
 
           {resultBooks.length > 0
-            ? <BookDisplay shelf='none' books={resultBooks} onMoveBook={onMoveBook} />
+            ? <BookDisplay shelf='none' books={resultBooks} onMoveBook={this.onMoveBook} />
 
             : !requestedQuery
             ? <div className="SearchPage__EmptyState">Search something.</div>

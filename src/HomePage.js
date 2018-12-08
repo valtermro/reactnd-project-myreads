@@ -4,7 +4,9 @@ import { Link } from 'react-router-dom';
 import BookShelf from './BookShelf';
 import './HomePage.css';
 
-export default function HomePage({ booksInShelf, onMoveBook }) {
+export default function HomePage(props) {
+  const { booksInShelf, onMoveBook } = props;
+
   return (
     <div className='HomePage'>
       <header className='HomePage__Header'>

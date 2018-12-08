@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Book from './Book';
-import './BookDisplay.css';
 import ShelfChanger from './ShelfChanger';
 import CheckButton from './elements/CheckButton';
+import './BookDisplay.css';
 
 export default class BookDisplay extends React.Component {
   static propTypes = {
@@ -30,8 +30,16 @@ export default class BookDisplay extends React.Component {
   }
 
   moveCheckedBooks = newShelf => {
-    // TODO: Should use some kind of bulkMoveBook callback so to avoid a new render
-    // for each moved book? Benchmark first.
+    // NOTE: Moving each book individually has two effects that note mentioning:
+    // 1: It will trigger a new render for each moved book; and
+    // 2: It will trigger a new api request for each moved book.
+    //
+    // While #1 is something that may become a performance issue it's something
+    // that should be benchmarked before doing any changes.
+    //
+    // #2, however, is really, really, bad and should be handled now. But, since
+    // the api itself should support bulk updates in order to avoid the multiple
+    // requests - which it doesn't -, there's nothing we can do about it.
     this.state.checkedBooks.forEach(book => this.moveBook(book, newShelf));
   }
 
@@ -49,7 +57,6 @@ export default class BookDisplay extends React.Component {
     const { checkedBooks } = this.state;
     const { books, shelf } = this.props;
     const allChecked = books.every(book => checkedBooks.includes(book));
-
 
     return (
       <div className='BookDisplay'>
