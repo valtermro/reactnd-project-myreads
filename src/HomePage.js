@@ -5,7 +5,7 @@ import BookShelf from './BookShelf';
 import './HomePage.css';
 
 export default function HomePage(props) {
-  const { booksInShelf, onMoveBook } = props;
+  const { booksInShelf, onMoveBook, loadingBooks } = props;
 
   return (
     <div className='HomePage'>
@@ -16,16 +16,19 @@ export default function HomePage(props) {
       <main className='HomePage__Content'>
         <BookShelf
           title='Currently Reading'
+          loading={loadingBooks}
           books={booksInShelf.filter(b => b.shelf === 'currentlyReading')}
           onMoveBook={onMoveBook} />
 
         <BookShelf
           title='Want to Read'
+          loading={loadingBooks}
           books={booksInShelf.filter(b => b.shelf === 'wantToRead')}
           onMoveBook={onMoveBook} />
 
         <BookShelf
           title='Read'
+          loading={loadingBooks}
           books={booksInShelf.filter(b => b.shelf === 'read')}
           onMoveBook={onMoveBook} />
       </main>
@@ -41,5 +44,6 @@ export default function HomePage(props) {
 
 HomePage.propTypes = {
   onMoveBook: PropTypes.func.isRequired,
+  loadingBooks: PropTypes.bool.isRequired,
   booksInShelf: PropTypes.array.isRequired
 };

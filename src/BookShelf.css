@@ -43,6 +43,12 @@
   padding: 8px;
 }
 
+.BookShelf__LoadingIcon {
+  width: 40px;
+  height: 40px;
+  margin: 20px auto 0;
+}
+
 @media screen and (min-width: 640px) {
   .BookShelf__Header {
     text-align: left;

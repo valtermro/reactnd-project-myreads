@@ -2,6 +2,7 @@ import React from 'react';
 import HomePage from './HomePage';
 import SearchPage from './SearchPage';
 import ErrorDisplay from './ErrorDisplay';
+import LoadingOverlay from './LoadingOverlay';
 import { Route } from 'react-router-dom';
 import * as api from './BooksAPI';
 import './App.css';
@@ -17,6 +18,8 @@ function createMessage(message) {
 
 export default class BooksApp extends React.Component {
   state = {
+    loadingBooks: true,
+    updatingBooks: false,
     booksInShelf: [],
     errorMessages: []
   }
@@ -24,21 +27,29 @@ export default class BooksApp extends React.Component {
   componentDidMount = async () => {
     // TODO: error handling
     const books = await api.getAll();
-    this.setState({ booksInShelf: books });
+
+    this.setState({
+      loadingBooks: false,
+      booksInShelf: books
+    });
   }
 
   moveBook = async (book, newShelf) => {
     try {
+      this.setState({ updatingBooks: true });
+
       await api.update(book, newShelf);
 
       this.setState(currentState => ({
+        updatingBooks: false,
         booksInShelf: [
           ...currentState.booksInShelf.filter(b => b.id !== book.id),
           { ...book, shelf: newShelf }
         ]
       }));
-    } catch (error) {
+    } catch (_) {
       this.setState(currentState => ({
+        updatingBooks: false,
         errorMessages: [
           ...currentState.errorMessages,
           createMessage(`Could not move "${book.title}" to "${newShelf}"`)
@@ -54,7 +65,7 @@ export default class BooksApp extends React.Component {
   }
 
   render() {
-    const { booksInShelf, errorMessages } = this.state;
+    const { loadingBooks, updatingBooks, booksInShelf, errorMessages } = this.state;
 
     return (
       <div className='app'>
@@ -62,12 +73,19 @@ export default class BooksApp extends React.Component {
           <ErrorDisplay messages={errorMessages} onCloseMessage={this.closeErrorMessage} />
         )}
 
+        {updatingBooks && <LoadingOverlay />}
+
         <Route exact path='/' render={() => (
-          <HomePage booksInShelf={booksInShelf} onMoveBook={this.moveBook} />
+          <HomePage
+            loadingBooks={loadingBooks}
+            booksInShelf={booksInShelf}
+            onMoveBook={this.moveBook} />
         )} />
 
         <Route path='/search' render={() => (
-          <SearchPage booksInShelf={booksInShelf} onMoveBook={this.moveBook} />
+          <SearchPage
+            booksInShelf={booksInShelf}
+            onMoveBook={this.moveBook} />
         )} />
       </div>
     );

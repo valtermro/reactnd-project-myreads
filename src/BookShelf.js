@@ -1,11 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import BookDisplay from './BookDisplay';
+import LoadingIcon from './elements/LoadingIcon';
 import './BookShelf.css';
 
 export default class BookShelf extends React.Component {
   static propTypes = {
     title: PropTypes.string.isRequired,
+    loading: PropTypes.bool.isRequired,
     books: PropTypes.array.isRequired,
     onMoveBook: PropTypes.func.isRequired
   }
@@ -19,7 +21,7 @@ export default class BookShelf extends React.Component {
   }
 
   render() {
-    const { title, books, onMoveBook } = this.props;
+    const { title, loading, books, onMoveBook } = this.props;
     const { collapsed } = this.state;
 
     return (
@@ -36,11 +38,13 @@ export default class BookShelf extends React.Component {
         </header>
 
         <div className='BookShelf__Display'>
-          {/* TODO: "loading" state */}
-          <BookDisplay
-            shelf={books.length > 0 ? books[0].shelf : 'none'}
-            books={books}
-            onMoveBook={onMoveBook} />
+          {loading
+            ? <LoadingIcon className='BookShelf__LoadingIcon' />
+            : <BookDisplay
+                shelf={books.length > 0 ? books[0].shelf : 'none'}
+                books={books}
+                onMoveBook={onMoveBook} />
+          }
         </div>
       </section>
     );

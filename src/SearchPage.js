@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import debounce from 'lodash.debounce';
 import { Link } from 'react-router-dom';
 import BookDisplay from './BookDisplay';
+import LoadingOverlay from './LoadingOverlay';
 import * as api from './BooksAPI';
 import './SearchPage.css';
 
@@ -102,11 +103,7 @@ export default class SearchPage extends React.Component {
         <main className='SearchPage__Results'>
           <h2 className='visually-hidden'>Search results</h2>
 
-          {requestingBooks && (
-            <div className='SearchPage__LoadingOverlay'>
-              <div className='SearchPage__LoadingIcon'></div>
-            </div>
-          )}
+          {requestingBooks && <LoadingOverlay />}
 
           {resultBooks.length > 0
             ? <BookDisplay shelf='none' books={resultBooks} onMoveBook={this.onMoveBook} />

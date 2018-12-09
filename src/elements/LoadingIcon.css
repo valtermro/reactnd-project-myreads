@@ -1,0 +1,6 @@
+.LoadingIcon {
+  display: block;
+  background-image: url(../icons/loading.svg);
+  width: 48px;
+  height: 48px;
+}
