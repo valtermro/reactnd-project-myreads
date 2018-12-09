@@ -11,9 +11,13 @@ export default class ShelfChanger extends React.Component {
   }
 
   state = {
-    selectIsOpen: false,
-    selectPositionY: 'top',
+    isOpen: false,
+    top: null,
+    bottom: null,
+    transformOrigin: null
   }
+
+  selectRef = React.createRef()
 
   onChange = value => {
     this.props.onChange(value);
@@ -21,41 +25,45 @@ export default class ShelfChanger extends React.Component {
   }
 
   openSelect = () => {
-    const select = this.refs.select.refs.root;
+    const select = this.selectRef.current.refs.root;
     const selectHeight = select.offsetHeight;
     const selectTop = select.getBoundingClientRect().top;
     const selectMarginBottom = 20;
 
-    // decide if the Select should slide up-to-bottom or bottom-to-up
-    if (selectTop + selectHeight > window.innerHeight - selectMarginBottom) {
-      this.setState({ selectIsOpen: true, selectPositionY: 'bottom' });
-    } else {
-      this.setState({ selectIsOpen: true, selectPositionY: 'top' });
-    }
+    const expandFrom = selectTop + selectHeight > window.innerHeight - selectMarginBottom
+      ? 'bottom'
+      : 'top';
+
+    this.setState({
+      isOpen: true,
+      top: expandFrom === 'bottom' ? null : 0,
+      bottom: expandFrom === 'bottom' ? 0 : null,
+      transformOrigin: `${expandFrom} left`,
+    });
+
     select.focus();
   }
 
   closeSelect = () => {
-    this.setState({ selectIsOpen: false });
+    this.setState({ isOpen: false });
   }
 
   render() {
-    const { selectIsOpen, selectPositionY } = this.state;
+    const { isOpen, top, bottom, transformOrigin } = this.state;
     const { current, label, className, children } = this.props;
 
     return (
-      <div className='ShelfChanger' data-is-open={selectIsOpen}>
-        {/* TODO: find a better way to "ref" the rendered DOM element */}
+      <div className='ShelfChanger' data-is-open={isOpen}>
         <div onClick={this.openSelect}>
           {children}
         </div>
 
-        <Select ref='select'
+        <Select ref={this.selectRef}
           // These properties are passed directly to the Select's root DOM
           // element and used in the styles ShelfChanger to define special
           // style/behavior on the renderered Select.
           className={`ShelfChanger__Select ${className || ''}`}
-          data-position-y={selectPositionY}
+          style={{ top, bottom, transformOrigin }}
 
           label={label}
           defaultValue={current}

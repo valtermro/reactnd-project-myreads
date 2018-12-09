@@ -12,16 +12,6 @@
   transition: transform 200ms linear;
 }
 
-.ShelfChanger__Select[data-position-y='top'] {
-  top: 0;
-  transform-origin: top left;
-}
-
-.ShelfChanger__Select[data-position-y='bottom'] {
-  bottom: 0;
-  transform-origin: bottom left;
-}
-
 .ShelfChanger[data-is-open='true'] .ShelfChanger__Select {
   transform: none;
 }
