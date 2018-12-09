@@ -40,9 +40,15 @@
   padding: 80px 10px 20px;
 }
 
-.SearchPage__EmptyState {
+.SearchPage__EmptyState,
+.SearchPage__ErrorMessage {
   text-align: center;
   padding: 40px 0;
   color: #999;
   font-size: 1.5em;
+}
+
+.SearchPage__ErrorMessage {
+  color: #c33;
+  font-weight: 500;
 }

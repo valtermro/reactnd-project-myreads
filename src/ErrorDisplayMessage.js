@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './ErrorMessage.css';
+import './ErrorDisplayMessage.css';
 
-export default class ErrorMessage extends React.Component {
+export default class ErrorDisplayMessage extends React.Component {
   static propTypes = {
     text: PropTypes.string.isRequired,
     onClose: PropTypes.func.isRequired
@@ -34,12 +34,12 @@ export default class ErrorMessage extends React.Component {
     const { fade } = this.state;
 
     return (
-      <div ref={this.rootRef} className='ErrorMessage' data-fading={fade}>
-        <div className='ErrorMessage__Text'>
+      <div ref={this.rootRef} className='ErrorDisplayMessage' data-fading={fade}>
+        <div className='ErrorDisplayMessage__Text'>
           {text}
         </div>
         <button type='button'
-            className='button ErrorMessage__CloseButton'
+            className='button ErrorDisplayMessage__CloseButton'
             onClick={this.onClose}>
           close
         </button>

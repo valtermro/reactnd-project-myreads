@@ -1,4 +1,4 @@
-.ErrorMessage {
+.ErrorDisplayMessage {
   background: #fff;
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
   display: flex;
@@ -9,17 +9,17 @@
   transition: opacity 500ms linear;
 }
 
-.ErrorMessage[data-fading='true'] {
+.ErrorDisplayMessage[data-fading='true'] {
   opacity: 0;
 }
 
 
-.ErrorMessage__Text {
+.ErrorDisplayMessage__Text {
   padding: 8px 4px 8px 8px;
   flex-grow: 1;
 }
 
-.ErrorMessage__CloseButton {
+.ErrorDisplayMessage__CloseButton {
   width: 22px;
   height: 22px;
   flex-shrink: 0;
@@ -28,8 +28,8 @@
   margin: 2px 2px 0 0;
 }
 
-.ErrorMessage__CloseButton::before,
-.ErrorMessage__CloseButton::after {
+.ErrorDisplayMessage__CloseButton::before,
+.ErrorDisplayMessage__CloseButton::after {
   background: #005050;
   content: '';
   display: block;
@@ -40,10 +40,10 @@
   left: 50%;
 }
 
-.ErrorMessage__CloseButton::before {
+.ErrorDisplayMessage__CloseButton::before {
   transform: translate(-50%, -50%) rotate(45deg);
 }
 
-.ErrorMessage__CloseButton::after {
+.ErrorDisplayMessage__CloseButton::after {
   transform: translate(-50%, -50%) rotate(-45deg);
 }

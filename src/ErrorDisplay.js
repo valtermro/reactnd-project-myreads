@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ErrorMessage from './ErrorMessage';
+import ErrorDisplayMessage from './ErrorDisplayMessage';
 import './ErrorDisplay.css';
 
 export default function ErrorDisplay(props) {
@@ -9,7 +9,7 @@ export default function ErrorDisplay(props) {
   return (
     <div className='ErrorDisplay'>
       {messages.map(message => (
-        <ErrorMessage
+        <ErrorDisplayMessage
             key={message.id}
             text={message.message}
             onClose={() => onCloseMessage(message.id)} />

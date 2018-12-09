@@ -7,8 +7,6 @@ import LoadingOverlay from './LoadingOverlay';
 import * as api from './BooksAPI';
 import './SearchPage.css';
 
-// TODO: prevent "render" on each keystroke in the search input
-
 export default class SearchPage extends React.Component {
   static propTypes = {
     onMoveBook: PropTypes.func.isRequired,
@@ -23,7 +21,8 @@ export default class SearchPage extends React.Component {
     requestedQuery: '',
 
     requestingBooks: false,
-    resultBooks: []
+    resultBooks: [],
+    errorMessage: ''
   }
 
   resolveBooks = books => {
@@ -55,22 +54,28 @@ export default class SearchPage extends React.Component {
       });
     }
 
-    this.setState({ requestingBooks: true });
+    try {
+      this.setState({ requestingBooks: true });
 
-    // TODO: Error handling
-    const result = await api.search(query);
+      const result = await api.search(query);
 
-    if (result.error) {
+      if (result.error) {
+        this.setState({
+          requestingBooks: false,
+          requestedQuery: query,
+          resultBooks: []
+        });
+      } else {
+        this.setState({
+          requestingBooks: false,
+          requestedQuery: query,
+          resultBooks: this.resolveBooks(result)
+        });
+      }
+    } catch (_) {
       this.setState({
         requestingBooks: false,
-        requestedQuery: query,
-        resultBooks: []
-      });
-    } else {
-      this.setState({
-        requestingBooks: false,
-        requestedQuery: query,
-        resultBooks: this.resolveBooks(result)
+        errorMessage: `Something went wrong while seaching for "${query}"`
       });
     }
   }, 500)
@@ -80,7 +85,7 @@ export default class SearchPage extends React.Component {
   }
 
   render() {
-    const { resultBooks, query, requestedQuery, requestingBooks } = this.state;
+    const { query, requestedQuery, requestingBooks, errorMessage, resultBooks } = this.state;
 
     return (
       <div className='SearchPage'>
@@ -105,7 +110,10 @@ export default class SearchPage extends React.Component {
 
           {requestingBooks && <LoadingOverlay />}
 
-          {resultBooks.length > 0
+          {errorMessage
+            ? <div className='SearchPage__ErrorMessage'>{errorMessage}</div>
+
+            : resultBooks.length > 0
             ? <BookDisplay shelf='none' books={resultBooks} onMoveBook={this.onMoveBook} />
 
             : !requestedQuery

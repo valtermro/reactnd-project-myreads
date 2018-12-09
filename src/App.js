@@ -25,13 +25,27 @@ export default class BooksApp extends React.Component {
   }
 
   componentDidMount = async () => {
-    // TODO: error handling
-    const books = await api.getAll();
+    try {
+      const books = await api.getAll();
 
-    this.setState({
-      loadingBooks: false,
-      booksInShelf: books
-    });
+      this.setState({
+        loadingBooks: false,
+        booksInShelf: books
+      });
+    } catch (_) {
+      // NOTE: This error will also be displayed if the app is started at the
+      // search page. In that case the message may not make much sense for the
+      // user since the page is not supposed to display the books in the shelves
+      // anyway but it should serve as a tip of why a book that is already in a
+      // shelf didn't show up as such in the list of books resulting from the search.
+      this.setState(currentState => ({
+        loadingBooks: false,
+        errorMessages: [
+          ...currentState.errorMessages,
+          createMessage('Something went wrong while loading your books')
+        ]
+      }));
+    }
   }
 
   moveBook = async (book, newShelf) => {
