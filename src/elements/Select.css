@@ -17,12 +17,36 @@
   color: #999;
 }
 
+.Select__Option {
+  position: relative;
+}
+
+.Select__Option::before {
+  content: '';
+  display: block;
+  opacity: 0;
+  border-left: 2px solid #999;
+  border-bottom: 2px solid #999;
+  position: absolute;
+  width: 10px;
+  height: 6px;
+  left: 6px;
+  /* right: 8px; */
+  top: 50%;
+  transform: translateY(-4px) rotate(-45deg);
+}
+
 .Select__Option:not([data-current='true']) {
   cursor: pointer;
 }
 
 .Select__Option[data-current='true'] {
   background: #f4f4f4;
+  padding-left: 22px;
+}
+
+.Select__Option[data-current='true']::before {
+  opacity: 1;
 }
 
 .Select__Option[data-selected='true'],
