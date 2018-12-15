@@ -7,12 +7,12 @@
   margin: 0 auto;
   width: 130px;
   height: 200px;
-  background-color: #f4f4f4;
   background-size: cover;
   background-position: center;
 
   /* the placeholder text */
-  color: #a4a4a4;
+  color: #666;
+  background-color: #ddd;
   display: flex;
   justify-content: center;
   align-items: center;
